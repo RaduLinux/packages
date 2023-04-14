@@ -1,0 +1,46 @@
+# Maintainer: Jonas Witschel <diabonas@archlinux.org>
+# Contributor: Sven-Hendrik Haase <sh@lutzhaase.com>
+# Contributor: Malte Rabenseifner <malte@zearan.de>
+# Contributor: John Gerritse <reaphsharc@gmail.com>
+
+pkgname=lsb-release
+pkgver=2.0.r48.3cf5103
+_commit=3cf51039933d03ef15388b75d30baa5d5e09a1a0
+pkgrel=1
+pkgdesc="LSB version query program"
+arch=('any')
+url="https://refspecs.linuxfoundation.org/lsb.shtml"
+license=('GPL')
+depends=('sh')
+makedepends=('git')
+source=("git+https://github.com/LinuxStandardBase/lsb-samples.git#commit=$_commit"
+        'lsb-release'
+        'lsb_release_description.patch'
+        'lsb_release_make_man_page_reproducible.patch')
+sha256sums=('SKIP'
+            '26b1b3536220543eb22f1fe34a4cbc36b5b4221768746ddd6db8d6a42113a035'
+            '79f7f4d47052eea37c602d42c8d75d391b87effd867f20003f179e8f74663e93'
+            'da9fdceedd09f336652147d4482edc6f0e8834cc24ed64ecda79b3c1efeac7a6')
+
+pkgver() {
+	cd lsb-samples/lsb_release/src
+	printf "%s.r%s.%s" "$(grep -Po 'SCRIPTVERSION="\K[^"]*' lsb_release)" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+	cd lsb-samples/lsb_release/src
+	patch -Np0 -i "$srcdir/lsb_release_description.patch"
+	patch -Np1 -i "$srcdir/lsb_release_make_man_page_reproducible.patch"
+}
+
+build() {
+	cd lsb-samples/lsb_release/src
+	make
+}
+
+package() {
+	cd lsb-samples/lsb_release/src
+	install -Dm644 lsb_release.1.gz -t "$pkgdir/usr/share/man/man1"
+	install -Dm755 lsb_release -t "$pkgdir/usr/bin"
+	install -Dm644 "$srcdir/lsb-release" -t "$pkgdir/etc"
+}

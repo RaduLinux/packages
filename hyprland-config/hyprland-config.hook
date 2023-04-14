@@ -1,0 +1,10 @@
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = hyprland-config
+
+[Action]
+Description = Update hyprland configuration in users' homes
+When = PostTransaction
+Exec = /sbin/update-hyprland-config

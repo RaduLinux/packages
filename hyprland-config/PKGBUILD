@@ -1,0 +1,39 @@
+# Maintainer: Radu
+pkgname=hyprland-config
+_tag='4ec605dcb6a593213628bafb193636990481a3ef'
+pkgver="git_$_tag"
+pkgrel=1
+arch=("x86_64")
+url=https://github.com/RaduLinux/hyprland-config
+license=('GPL')
+groups=()
+depends=()
+makedepends=()
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=("git+$url#tag=${_tag}" "hyprland-config.hook" "update-hyprland-config")
+noextract=()
+sha256sums=('SKIP'
+            '49f4dcb09e2c9d3a9aa7f72c90771e3601aa26261e1c91329ce0597c591e0d33'
+            '50165e46c888d997d69db8ae42633c1c20ab636da02744cb0d3a8614b7bee3d1')
+validpgpkeys=()
+
+build() {
+	echo "Nothing to build"
+}
+
+package() {
+	cd "$srcdir/$pkgname"
+	mkdir -vp "$pkgdir/etc/skel/.config"
+	cp -r ".config/"* "$pkgdir/etc/skel/.config"
+	install -vDm774 ".wallpaper.png" "$pkgdir/etc/skel/.wallpaper.png"
+	install -vDm774 "$srcdir/update-hyprland-config" "$pkgdir/usr/bin/update-hyprland-config"
+	install -vDm774 "$srcdir/hyprland-config.hook" "$pkgdir/etc/pacman.d/hooks/hyprland-config.hook"
+}

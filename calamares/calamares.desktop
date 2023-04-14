@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Calamares
+Categories=Utility
+Exec=/usr/bin/calamares
+Terminal=false

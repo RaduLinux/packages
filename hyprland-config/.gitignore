@@ -1,0 +1,5 @@
+src
+pkg
+conf
+*.tar*
+hyprland-config

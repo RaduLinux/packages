@@ -1,0 +1,19 @@
+#! /usr/bin/bash
+
+cd /home
+
+for home in *; do
+  if [ -f "/home/$home/.hypr-config-skip-update" ]; then
+    echo "Skipping /home/$home"
+    continue
+  fi
+  echo Copying to /home/$home
+  mkdir /home/$home/.config
+  cp -r /etc/skel/.config/* /home/$home/.config
+  chown -R $home /home/$home/.config/
+  if [ ! -f "/home/$home/.wallpaper.png" ]; then
+    echo "Copying wallpaper"
+    cp /etc/skel/.wallpaper.png /home/$home/.wallpaper.png
+  fi
+  echo "To skip further updates, run the following command: 'touch /home/$home/.hypr-config-skip-update'"
+done
