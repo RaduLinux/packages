@@ -2,8 +2,10 @@
 !.git
 !.gitignore
 !make.sh
-!calamares
-!calamares/**/*
+!anaconda-installer
+!anaconda-installer/**/*
+!anaconda-config
+!anaconda-config/**/*
 !hyprland-config
 !hyprland-config/**/*
 !base
@@ -16,4 +18,6 @@
 !lsb-release/**/*
 !ckbcomp
 !ckbcomp/**/*
+!urlgrabber
+!urlgrabber/**/*
 *.pkg.tar.zst
